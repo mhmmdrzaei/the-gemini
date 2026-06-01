@@ -1,0 +1,19 @@
+// Breakpoints
+$bp-mobile: 48em;   // 768px
+$bp-tablet: 64em;   // 1024px
+$bp-wide:   90em;   // 1440px
+
+// Colours — also exposed as CSS custom properties in globals.scss
+$color-bg:           #301d41;
+$color-accent:       #bae036;
+$color-card-cream:   #f2e9c8;
+$color-card-shadow:  #2c1a0d;
+$color-card-white:   #ffffff;
+$color-text-dark:    #0f0c01;
+
+// Spacing scale (used for consistent rhythm)
+$space-xs:  0.25rem;
+$space-sm:  0.5rem;
+$space-md:  1rem;
+$space-lg:  2rem;
+$space-xl:  4rem;

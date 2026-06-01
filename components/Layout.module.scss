@@ -1,0 +1,50 @@
+@use '../styles/variables' as *;
+
+.site {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // Push content below the fixed nav
+  padding-top: clamp(13rem, 30vh, 20rem);
+  padding-bottom: clamp(3rem, 6vh, 6rem);
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-top: clamp(5rem, 15vh, 8rem);
+  }
+}
+
+.content {
+  width: 100%;
+}
+
+// ── Footer wordmark ────────────────────────────────────────────────────────
+.footer {
+  text-align: center;
+  padding: clamp(1.5rem, 4vw, 3rem) 1rem clamp(1rem, 3vw, 2.5rem);
+  user-select: none;
+}
+
+.restaurantWord {
+  display: block;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: clamp(3rem, 10vw, 7.5rem);
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: -0.01em;
+  color: var(--color-accent);
+  line-height: 1;
+  transition: opacity 0.15s ease;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
