@@ -1,6 +1,12 @@
+const path = require('path')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ['sanity', '@sanity/ui', '@sanity/icons', 'styled-components'],
+  // Pin the workspace root — a stray lockfile in the home dir otherwise
+  // confuses Next's auto-detection.
+  turbopack: {
+    root: path.join(__dirname),
+  },
   images: {
     remotePatterns: [
       {

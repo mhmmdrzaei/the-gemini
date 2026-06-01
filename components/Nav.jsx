@@ -1,11 +1,13 @@
+'use client'
+
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import styles from './Nav.module.scss'
 
 export default function Nav({ siteSettings }) {
   const [open, setOpen] = useState(false)
-  const router = useRouter()
+  const pathname = usePathname()
 
   const {
     menuItems = [],
@@ -15,12 +17,10 @@ export default function Nav({ siteSettings }) {
     socialLinks = [],
   } = siteSettings || {}
 
-  // Close on route change
+  // Close the mobile menu whenever the route changes
   useEffect(() => {
-    const handler = () => setOpen(false)
-    router.events.on('routeChangeStart', handler)
-    return () => router.events.off('routeChangeStart', handler)
-  }, [router.events])
+    setOpen(false)
+  }, [pathname])
 
   // Lock body scroll while mobile menu is open
   useEffect(() => {
@@ -50,8 +50,8 @@ export default function Nav({ siteSettings }) {
           {menuItems.map((item, i) => {
             const isActive =
               item.link === '/'
-                ? router.pathname === '/'
-                : router.asPath.startsWith(item.link)
+                ? pathname === '/'
+                : pathname.startsWith(item.link)
             return (
               <li key={i}>
                 <Link

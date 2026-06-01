@@ -49,7 +49,9 @@ Create pages with these slugs to match the mockups:
 
 For pages using the **Cards with Overlay** layout, upload the fish lure image in the **Overlay Card Image** field.
 
-## Fonts used
-- **Space Grotesk** — navigation links
-- **Playfair Display** (italic) — card body text
-- **Barlow Condensed** (800 italic) — "RESTAURANT" footer wordmark
+## Stack
+- **Next.js 16** (App Router, `app/` directory)
+- **React 19**
+- **Sanity v5** with the Studio embedded at `/studio`
+- **next-sanity v13** for the client + Studio
+- **SCSS modules**, all type set in Helvetica
