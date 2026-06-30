@@ -175,11 +175,19 @@
     pointer-events: all;
   }
 
-  // Reset the desktop side-rail positioning inside the overlay
+  // Reset the desktop side-rail positioning inside the overlay, and keep the
+  // groups non-interactive until the menu is actually open (otherwise the
+  // invisible full-screen overlay swallows taps meant for the page).
   .links,
   .info {
     position: static;
     transform: none;
+    pointer-events: none;
+  }
+
+  .open .links,
+  .open .info {
+    pointer-events: all;
   }
 
   .links a {
