@@ -86,6 +86,59 @@ export const page = {
             },
           ],
         },
+        {
+          type: 'object',
+          name: 'resyBooking',
+          title: 'Resy Reservation Widget (inline)',
+          description: 'Embeds the full Resy booking flow directly on the page',
+          fields: [
+            {
+              name: 'venueId',
+              title: 'Venue ID',
+              type: 'number',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'apiKey',
+              title: 'API Key',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            },
+          ],
+          preview: {
+            select: { venueId: 'venueId' },
+            prepare({ venueId }) {
+              return {
+                title: 'Resy Reservation Widget',
+                subtitle: venueId ? `Venue ${venueId}` : 'Venue ID missing',
+              }
+            },
+          },
+        },
+        {
+          type: 'object',
+          name: 'codeEmbed',
+          title: 'Code / HTML Embed',
+          fields: [
+            {
+              name: 'code',
+              title: 'HTML / Embed Code',
+              description:
+                'Paste raw HTML and/or <script> embeds here (e.g. a Resy widget). Scripts will run on the page.',
+              type: 'text',
+              rows: 8,
+            },
+          ],
+          preview: {
+            select: { code: 'code' },
+            prepare({ code }) {
+              return {
+                title: 'Code / HTML Embed',
+                subtitle: code ? code.replace(/\s+/g, ' ').slice(0, 60) : 'empty',
+              }
+            },
+          },
+        },
       ],
     },
     {

@@ -1,26 +1,27 @@
 @use '../styles/variables' as *;
 
 // ── Shared ─────────────────────────────────────────────────────────────────
+// The nav overlays the whole viewport but is click-through. Only the two
+// content groups (.links / .info) capture pointer events, so the centre of
+// the page — where the main content lives — stays fully clickable.
 .nav {
   position: fixed;
-  inset: 0 0 auto 0;
+  inset: 0;
   z-index: 200;
-  padding: clamp(1.5rem, 3vw, 3rem);
-  pointer-events: none; // pass clicks through to content
+  pointer-events: none;
 }
 
 .inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  pointer-events: all;
+  height: 100%;
+  pointer-events: none;
 }
 
-// ── Links (left column) ────────────────────────────────────────────────────
+// ── Links group ──────────────────────────────────────────────────────────
 .links {
   display: flex;
   flex-direction: column;
   gap: 0.55em;
+  pointer-events: all;
 
   a {
     font-size: clamp(1rem, 2vw, 1.5rem);
@@ -40,13 +41,14 @@
   }
 }
 
-// ── Info (right column) ────────────────────────────────────────────────────
+// ── Info group ─────────────────────────────────────────────────────────────
 .info {
-  text-align: right;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  text-align: right;
   gap: 0.4em;
+  pointer-events: all;
 }
 
 .address {
@@ -96,6 +98,21 @@
   }
 }
 
+// ── Desktop: pin groups to the top-left / top-right corners ────────────────
+@media (min-width: #{$bp-mobile}) {
+  .links {
+    position: fixed;
+    left: clamp(1.5rem, 3vw, 3rem);
+    top: clamp(1.5rem, 3vw, 3rem);
+  }
+
+  .info {
+    position: fixed;
+    right: clamp(1.5rem, 3vw, 3rem);
+    top: clamp(1.5rem, 3vw, 3rem);
+  }
+}
+
 // ── Hamburger (mobile only) ────────────────────────────────────────────────
 .hamburger {
   display: none;
@@ -133,24 +150,17 @@
   }
 }
 
-// ── Mobile ─────────────────────────────────────────────────────────────────
+// ── Mobile: hamburger + full-screen overlay ────────────────────────────────
 @media (max-width: #{$bp-mobile}) {
   .hamburger {
     display: flex;
-  }
-
-  .nav {
-    pointer-events: none;
-
-    &.open {
-      pointer-events: all;
-    }
   }
 
   .inner {
     position: fixed;
     inset: 0;
     background: var(--color-bg);
+    display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 5rem 2.5rem 3rem;
@@ -165,15 +175,20 @@
     pointer-events: all;
   }
 
-  .links {
-    a {
-      font-size: clamp(1.5rem, 8vw, 2.5rem);
-      opacity: 0.7;
+  // Reset the desktop side-rail positioning inside the overlay
+  .links,
+  .info {
+    position: static;
+    transform: none;
+  }
 
-      &.active,
-      &:hover {
-        opacity: 1;
-      }
+  .links a {
+    font-size: clamp(1.5rem, 8vw, 2.5rem);
+    opacity: 0.7;
+
+    &.active,
+    &:hover {
+      opacity: 1;
     }
   }
 

@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import { PortableText } from '@portabletext/react'
 import { urlFor } from '@/lib/sanity'
+import HtmlEmbed from './HtmlEmbed'
+import ResyInline from './ResyInline'
 import styles from './PageCard.module.scss'
 
 const portableTextComponents = {
@@ -36,6 +38,12 @@ const portableTextComponents = {
         />
       </div>
     ),
+    codeEmbed: ({ value }) =>
+      value?.code ? <HtmlEmbed html={value.code} /> : null,
+    resyBooking: ({ value }) =>
+      value?.venueId && value?.apiKey ? (
+        <ResyInline venueId={value.venueId} apiKey={value.apiKey} />
+      ) : null,
   },
 }
 

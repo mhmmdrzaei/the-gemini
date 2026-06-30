@@ -1,0 +1,8 @@
+.embed {
+  margin: 1.5em 0;
+
+  // Let embedded buttons/widgets size naturally
+  :global(a) {
+    display: inline-block;
+  }
+}
