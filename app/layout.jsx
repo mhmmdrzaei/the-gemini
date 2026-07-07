@@ -1,11 +1,14 @@
 import '@/styles/globals.scss'
 import { sanityFetch, urlFor } from '@/lib/sanity'
-import { siteSettingsQuery } from '@/lib/queries'
+import { siteSettingsQuery, TAGS } from '@/lib/queries'
 
 // Site-wide metadata (favicon + fallback title/description) sourced from
 // Sanity Site Settings. Individual pages override title/description/og:image.
 export async function generateMetadata() {
-  const settings = await sanityFetch({ query: siteSettingsQuery })
+  const settings = await sanityFetch({
+    query: siteSettingsQuery,
+    tags: [TAGS.siteSettings],
+  })
   const siteName = settings?.siteName || 'The Gemini'
 
   const metadata = {

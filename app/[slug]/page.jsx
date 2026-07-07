@@ -1,22 +1,27 @@
 import { notFound } from 'next/navigation'
 import { sanityFetch } from '@/lib/sanity'
-import { pageBySlugQuery, allPageSlugsQuery, siteSettingsQuery } from '@/lib/queries'
+import { pageBySlugQuery, allPageSlugsQuery, siteSettingsQuery, TAGS } from '@/lib/queries'
 import { buildPageMetadata } from '@/lib/metadata'
 import Layout from '@/components/Layout'
 import PageCard from '@/components/PageCard'
 
-export const revalidate = 60
+// Safety-net revalidation only; real updates come from the Sanity webhook.
+export const revalidate = 86400
 
 async function getData(slug) {
   const [page, siteSettings] = await Promise.all([
-    sanityFetch({ query: pageBySlugQuery, params: { slug } }),
-    sanityFetch({ query: siteSettingsQuery }),
+    sanityFetch({
+      query: pageBySlugQuery,
+      params: { slug },
+      tags: [TAGS.page, TAGS.pageSlug(slug)],
+    }),
+    sanityFetch({ query: siteSettingsQuery, tags: [TAGS.siteSettings] }),
   ])
   return { page, siteSettings }
 }
 
 export async function generateStaticParams() {
-  const slugs = await sanityFetch({ query: allPageSlugsQuery })
+  const slugs = await sanityFetch({ query: allPageSlugsQuery, tags: [TAGS.page] })
   return (slugs || []).map((s) => ({ slug: s.slug }))
 }
 

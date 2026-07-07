@@ -166,12 +166,17 @@
     padding: 5rem 2.5rem 3rem;
     gap: 3rem;
     opacity: 0;
+    // visibility:hidden (not just pointer-events) so the closed overlay is
+    // fully removed from hit-testing — otherwise it can still swallow taps
+    // meant for an <iframe> beneath it (iOS Safari).
+    visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
   }
 
   .open .inner {
     opacity: 1;
+    visibility: visible;
     pointer-events: all;
   }
 
